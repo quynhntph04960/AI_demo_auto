@@ -1,0 +1,9 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="50" height="53" viewBox="0 0 50 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="noti">
+<circle id="Ellipse 8" cx="24" cy="29" r="24" fill="#007471"/>
+<g id="lucide:bell">
+<path id="Vector" d="M25.8742 38.75C25.6837 39.0783 25.4103 39.3509 25.0814 39.5403C24.7525 39.7298 24.3796 39.8295 24 39.8295C23.6204 39.8295 23.2475 39.7298 22.9186 39.5403C22.5897 39.3509 22.3163 39.0783 22.1258 38.75M30.5 24.6667C30.5 22.9428 29.8152 21.2895 28.5962 20.0705C27.3772 18.8515 25.7239 18.1667 24 18.1667C22.2761 18.1667 20.6228 18.8515 19.4038 20.0705C18.1848 21.2895 17.5 22.9428 17.5 24.6667C17.5 32.25 14.25 34.4167 14.25 34.4167H33.75C33.75 34.4167 30.5 32.25 30.5 24.6667Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<circle id="Ellipse 2" cx="39" cy="11" r="11" fill="#E61414"/>
+</g>
+</svg>
