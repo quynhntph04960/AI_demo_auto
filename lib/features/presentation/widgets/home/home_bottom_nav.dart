@@ -5,16 +5,19 @@ import '../../../../base/widgets/images/image_network_widget.dart';
 import 'home_assets.dart';
 
 class HomeBottomNav extends StatelessWidget {
-  const HomeBottomNav({super.key});
+  const HomeBottomNav({super.key, this.selectedIndex = 0, this.onItemTap});
+
+  final int selectedIndex;
+  final ValueChanged<int>? onItemTap;
 
   @override
   Widget build(BuildContext context) {
     const items = [
-      _NavItem('Home', HomeAssets.iconHome, true),
-      _NavItem('Video', HomeAssets.iconVideo, false),
-      _NavItem('Ảnh', HomeAssets.iconImage, false),
-      _NavItem('Tài khoản', HomeAssets.iconUser, false),
-      _NavItem('Menu', '', false),
+      _NavItem('Home', HomeAssets.iconHome),
+      _NavItem('Video', HomeAssets.iconVideo),
+      _NavItem('Ảnh', HomeAssets.iconImage),
+      _NavItem('Tài khoản', HomeAssets.iconUser),
+      _NavItem('Menu', ''),
     ];
 
     return Container(
@@ -26,42 +29,15 @@ class HomeBottomNav extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          for (final item in items)
-            SizedBox(
-              width: 72,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  item.icon.isEmpty
-                      ? Icon(
-                          Icons.grid_view,
-                          size: 25,
-                          color: item.active
-                              ? AppColors.primary
-                              : AppColors.textMuted,
-                        )
-                      : ImageNetworkWidget(
-                          imageUrl: item.icon,
-                          width: 25,
-                          height: 25,
-                          color: item.active
-                              ? AppColors.primary
-                              : AppColors.textMuted,
-                        ),
-                  const SizedBox(height: 5),
-                  Text(
-                    item.label,
-                    style: TextStyle(
-                      color: item.active
-                          ? AppColors.primary
-                          : AppColors.textMuted,
-                      fontSize: 16,
-                      fontWeight: item.active
-                          ? FontWeight.w500
-                          : FontWeight.w400,
-                    ),
-                  ),
-                ],
+          for (var index = 0; index < items.length; index++)
+            InkWell(
+              onTap: () => onItemTap?.call(index),
+              child: SizedBox(
+                width: 72,
+                child: _BottomNavItem(
+                  item: items[index],
+                  active: selectedIndex == index,
+                ),
               ),
             ),
         ],
@@ -70,10 +46,44 @@ class HomeBottomNav extends StatelessWidget {
   }
 }
 
+class _BottomNavItem extends StatelessWidget {
+  const _BottomNavItem({required this.item, required this.active});
+
+  final _NavItem item;
+  final bool active;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = active ? AppColors.primary : AppColors.textMuted;
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        item.icon.isEmpty
+            ? Icon(Icons.grid_view, size: 25, color: color)
+            : ImageNetworkWidget(
+                imageUrl: item.icon,
+                width: 25,
+                height: 25,
+                color: color,
+              ),
+        const SizedBox(height: 5),
+        Text(
+          item.label,
+          style: TextStyle(
+            color: color,
+            fontSize: 16,
+            fontWeight: active ? FontWeight.w500 : FontWeight.w400,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _NavItem {
-  const _NavItem(this.label, this.icon, this.active);
+  const _NavItem(this.label, this.icon);
 
   final String label;
   final String icon;
-  final bool active;
 }

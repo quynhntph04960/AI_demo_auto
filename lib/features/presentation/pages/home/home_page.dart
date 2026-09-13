@@ -8,6 +8,7 @@ import '../../widgets/home/home_bottom_nav.dart';
 import '../../widgets/home/home_category_grid.dart';
 import '../../widgets/home/home_header.dart';
 import '../../widgets/home/service_grid.dart';
+import '../service/service_overview_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, this.showFloatingActions = false});
@@ -21,6 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var _showBookingForm = false;
   var _showBookingSuccess = false;
+  var _selectedTab = 0;
 
   void _openBookingForm() {
     setState(() {
@@ -50,33 +52,17 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: AppColors.white,
       body: Stack(
         children: [
-          Column(
-            children: [
-              const HomeHeader(),
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.only(bottom: 80),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      HomeCategoryGrid(onBookingTap: _openBookingForm),
-                      Container(
-                        height: 10,
-                        width: double.infinity,
-                        color: AppColors.backgroundGray,
-                      ),
-                      const ServiceGrid(),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const Positioned(
+          Column(children: [Expanded(child: _buildCurrentTab())]),
+          Positioned(
             left: 0,
             right: 0,
             bottom: 0,
-            child: HomeBottomNav(),
+            child: HomeBottomNav(
+              selectedIndex: _selectedTab,
+              onItemTap: (index) {
+                setState(() => _selectedTab = index);
+              },
+            ),
           ),
           if (widget.showFloatingActions) const FloatingContactActions(),
           if (_showBookingForm)
@@ -88,6 +74,35 @@ class _HomePageState extends State<HomePage> {
             BookingSuccessDialog(onClose: _closeBookingSuccess),
         ],
       ),
+    );
+  }
+
+  Widget _buildCurrentTab() {
+    if (_selectedTab == 4) {
+      return const ServiceOverviewPage();
+    }
+
+    return Column(
+      children: [
+        const HomeHeader(),
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.only(bottom: 80),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                HomeCategoryGrid(onBookingTap: _openBookingForm),
+                Container(
+                  height: 10,
+                  width: double.infinity,
+                  color: AppColors.backgroundGray,
+                ),
+                const ServiceGrid(),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
