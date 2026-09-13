@@ -5,7 +5,9 @@ import '../../../../base/widgets/images/image_network_widget.dart';
 import 'home_assets.dart';
 
 class HomeCategoryGrid extends StatelessWidget {
-  const HomeCategoryGrid({super.key});
+  const HomeCategoryGrid({super.key, this.onBookingTap});
+
+  final VoidCallback? onBookingTap;
 
   @override
   Widget build(BuildContext context) {
@@ -29,44 +31,56 @@ class HomeCategoryGrid extends StatelessWidget {
           mainAxisExtent: 100,
           crossAxisSpacing: 15,
         ),
-        itemBuilder: (context, index) => _CategoryTile(item: items[index]),
+        itemBuilder: (context, index) => _CategoryTile(
+          item: items[index],
+          onTap: items[index].label == 'Đặt lịch' ? onBookingTap : null,
+        ),
       ),
     );
   }
 }
 
 class _CategoryTile extends StatelessWidget {
-  const _CategoryTile({required this.item});
+  const _CategoryTile({required this.item, this.onTap});
 
   final _CategoryItem item;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 52,
-          height: 52,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            border: Border.all(color: AppColors.mintBorder),
-            borderRadius: BorderRadius.circular(10),
+    return InkWell(
+      borderRadius: BorderRadius.circular(10),
+      onTap: onTap,
+      child: Column(
+        children: [
+          Container(
+            width: 52,
+            height: 52,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              border: Border.all(color: AppColors.mintBorder),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: ImageNetworkWidget(
+              imageUrl: item.icon,
+              width: 35,
+              height: 35,
+            ),
           ),
-          child: ImageNetworkWidget(imageUrl: item.icon, width: 35, height: 35),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          item.label,
-          textAlign: TextAlign.center,
-          maxLines: 2,
-          style: const TextStyle(
-            color: AppColors.black,
-            fontSize: 16,
-            height: 1.15,
+          const SizedBox(height: 8),
+          Text(
+            item.label,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            style: const TextStyle(
+              color: AppColors.black,
+              fontSize: 16,
+              height: 1.15,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
