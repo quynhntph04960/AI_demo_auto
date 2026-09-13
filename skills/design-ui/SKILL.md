@@ -32,6 +32,7 @@ description: Dựng hoặc cập nhật UI Flutter từ Figma cho project này. 
 - Tất cả màu phải lấy từ `AppColors`. Nếu Figma có màu mới, thêm vào `AppColors` trước rồi mới dùng.
 - Button chính dùng `ButtonWidget`, trừ khi design cần một biến thể button dùng chung mới.
 - Ô nhập liệu thật phải dùng `BaseTextField`. Không dựng ô nhập bằng `Container` + `Text` nếu đó là input trong Figma.
+- Trường chọn dữ liệu như chi nhánh, dịch vụ, tỉnh/thành phải dùng `BaseDropdown` hoặc một biến thể base tương ứng, không dùng `BaseTextField` nếu Figma thể hiện đó là dropdown/select.
 - Kích thước màn hình phải responsive, nhưng vẫn bám tỉ lệ Figma 414 x 896 bằng constraints, `AspectRatio`, `FractionallySizedBox`, `LayoutBuilder`, hoặc tính theo tỉ lệ khi cần đặt chính xác.
 - Icon lấy từ Figma phải tải về project asset, không giữ URL network tạm thời. Lưu icon trong `assets/icons/`, đăng ký folder trong `pubspec.yaml`, gom path icon vào file constants của feature/base, và render bằng `ImageAssetWidget`.
 - Ảnh lớn như background, banner, ảnh dịch vụ, ảnh marketing có thể dùng link network. Gom URL vào constants và render bằng `ImageNetworkWidget`.
